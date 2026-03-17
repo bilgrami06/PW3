@@ -1,0 +1,61 @@
+#define left_sensor_pin A0
+#define right_sensor_pin A1
+#define motor_A_pin D3 // PWM Signal
+#define motor_B_pin D5 // PWM Signal
+
+float k_p;
+float k_d;
+float k_i;
+float time_step = 0.01f;
+float sum_error = 0;
+float error = 0;
+float previous_error = 0;
+int motor_A_pin;
+int motor_B_pin;
+int left_sensor_pin;
+int right_sensor_pin;
+float corrected_error = 0;
+ 
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(motor_A_pin, OUTPUT);
+  pinMode(motor_B_pin, OUTPUT);
+  pinMode(left_sensor_pin, INPUT);
+  pinMode(right_sensor_pin, INPUT);
+}
+ 
+void loop() {
+ 
+  int left_sensor_value = analogRead(left_sensor_pin);
+  int right_sensor_value = analogRead(right_sensor_pin);
+
+ 
+ 
+ 
+ 
+  // put your main code here, to run repeatedly:
+  previous_error = error;
+ 
+  // get error here
+  error = left_sensor_value - right_sensor_value;
+  // polarity changes if track not in line with coils
+  sum_error += error * time_step;
+  corrected_error = computePIDLoop();
+
+  // set motor speeds here
+  if right_sensor_value > left_sensor_value {
+
+
+
+  }
+ 
+  delay(time_step);
+}
+ 
+float computePIDLoop(){
+  float p = k_p * error;
+  float d = k_d * (error-previous_error)/time_step;
+  float i = k_i * sum_error;
+ 
+  float direction = p + i + d;
+  return direction;
