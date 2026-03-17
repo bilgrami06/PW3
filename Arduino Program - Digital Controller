@@ -30,9 +30,7 @@ void loop() {
   int left_sensor_value = analogRead(left_sensor_pin);
   int right_sensor_value = analogRead(right_sensor_pin);
   
-  // Outputs the sensor values repeatedly onto the serial monitor
-  Serial.println(left_sensor_value);
-  Serial.println(right_sensor_value);
+  
 
  
  
